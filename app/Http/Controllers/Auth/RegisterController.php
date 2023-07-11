@@ -10,11 +10,12 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
+
     public function register(Request $request)
     {
         try {
             //code...
-            $validateUser = Validator::make($request->all,
+            $validateUser = Validator::make($request->all(),
             [
             'name' =>'required',
             'lastname'=>'required',
@@ -24,6 +25,7 @@ class RegisterController extends Controller
             'email' =>'required|email|unique:users,email',
             'password'=>'required',
             ]);
+
             if($validateUser->fails()) {
                 return response()->json([
                     'status'=> false,
@@ -38,13 +40,18 @@ class RegisterController extends Controller
                 'role_id'=>$request->role_id,
                 'phone'=>$request->phone,
                 'email'=> $request->email,
-                'password'=> Hash::make($request->email),
+                'password'=> bcrypt($request->password),
             ]);
+
+            $token = $user->createToken('TOKEN')->plainTextToken;
+
 
             return response()->json([
                 'status'=> true,
                 'message'=> 'User created successfully',
-                'token'=> $user->createToken('API TOKEN')->PlainTextToken
+                'user'=> $user,
+                'access_token'=> $token,
+                'token_type'=> 'Bearer'
             ],200);
 
         } catch (\Throwable $th) {
