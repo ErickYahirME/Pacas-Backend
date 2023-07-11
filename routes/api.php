@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\UserProfile;
 use App\Http\Controllers\SexController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,8 +33,13 @@ Route::put('updateGenero/{id}', [SexController::class, 'updateSex']);
 // delete Sex
 Route::delete('deleteGenero/{id}', [SexController::class, 'deleteSex']);
 
+// Auth
+Route::group(['middleware'=>'auth:api'], function(){
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::get('profile', [UserProfile::class, 'userDetails'])->middleware('auth:api');
+});
 
-
+Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
 
