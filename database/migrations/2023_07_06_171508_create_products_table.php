@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedBigInteger('size_id')->nullable();
             $table->unsignedBigInteger('type_clothes_id')->nullable();
-            $table->unsignedBigInteger('type_color_id')->nullable();
+            // $table->unsignedBigInteger('type_color_id')->nullable();
 
 
             $table->foreign('author_id')

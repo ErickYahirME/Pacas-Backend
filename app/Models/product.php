@@ -18,7 +18,7 @@ class product extends Model
         'author_id',
         'size_id',
         'type_clothes_id',
-        'type_color_id',
+        // 'type_color_id',
     ];
 
 
