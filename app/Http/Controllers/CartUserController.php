@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cart;
+use App\Models\cartUser;
 use Illuminate\Http\Request;
 
 class CartUserController extends Controller
 {
     //
 
-    public function getCart()
+    public function getCartUser()
     {
         return response()->json(cart::all(), 200);
     }
 
     
-    public function addCart(Request $request){
+    public function addCartUser(Request $request){
         $cart = cart::create($request->all());
         return response($cart, 201);
     }
 
-    public function updateCart(Request $request, $id){
+    public function updateCartUser(Request $request, $id){
         $cart = cart::find($id);
         if(is_null($cart)){
             return response()->json(['message' => 'Cart Not Found'], 404);
@@ -29,7 +29,7 @@ class CartUserController extends Controller
         return response($cart, 200);
     }
 
-    public function deleteCart($id){
+    public function deleteCartUser($id){
         $cart = cart::find($id);
         if(is_null($cart)){
             return response()->json(['message'=> 'Cart Not Found'], 404);
