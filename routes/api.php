@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserProfile;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SexController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,5 +43,10 @@ Route::group(['middleware'=>'auth:api'], function(){
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
-
+Route::get('product', [ProductController::class, 'getAllProduct']);
+Route::get('product/{id}', [ProductController::class, 'getProductById']);
+Route::post('addProduct', [ProductController::class, 'addProduct']);
+Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct']);
+Route::delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']);
+Route::get('product/author/{author}', [ProductController::class, 'getProductByAuthor']);
 
