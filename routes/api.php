@@ -97,3 +97,15 @@ Route::post('addTipoRopa', [TypeClotheController::class, 'addTypeClothe']);
 Route::put('updateTypeClothe/{id}', [TypeClotheController::class, 'updateTypeClothe']);
 //delete typeclothe
 Route::delete('deleteTypeClothe/{id}', [TypeClotheController::class, 'deleteTypeClothe']);
+
+
+//get all role
+Route::get('roles',[RoleController::class, 'getRole']);
+//get role by id
+Route::get('roles/{id}',[RoleController::class, 'getRoleById']);
+//add role
+Route::post('addRol',[RoleController::class, 'addRole']);
+//update role
+Route::put('updateRol/{id}',[RoleController::class, 'updateRole']);
+//delete role
+Route::delete('deleteRol/{id}',[RoleController::class, 'deleteRole']);
