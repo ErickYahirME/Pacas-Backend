@@ -16,3 +16,4 @@ class UserProfile extends Controller
         return response()->json(['data' => $user]);
     }
 }
+
