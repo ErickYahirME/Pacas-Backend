@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cart;
+use App\Models\cartUser;
 use Illuminate\Http\Request;
 
 class CartUserController extends Controller
@@ -11,17 +11,33 @@ class CartUserController extends Controller
 
     public function getCart()
     {
-        return response()->json(cart::all(), 200);
+        return response()->json(cartUser::all(), 200);
     }
 
-    
+    public function getCartById($id)
+    {
+        $cart = cartUser::find($id);
+        if(is_null($cart)){
+            return response()->json(['message'=>'Cart Not Found'], 404);
+        }
+        return response()->json(cartUser::find($id), 200);
+    }
+
+    public function getCartByUser($user){
+        $cart = cartUser::where('user_id', $user)->get();
+        if(is_null($cart)){
+            return response()->json(['message' => 'Cart Not Found'], 404);
+        }
+        return response()->json($cart, 200);
+    }
+
     public function addCart(Request $request){
-        $cart = cart::create($request->all());
+        $cart = cartUser::create($request->all());
         return response($cart, 201);
     }
 
     public function updateCart(Request $request, $id){
-        $cart = cart::find($id);
+        $cart = cartUser::find($id);
         if(is_null($cart)){
             return response()->json(['message' => 'Cart Not Found'], 404);
         }
@@ -30,7 +46,7 @@ class CartUserController extends Controller
     }
 
     public function deleteCart($id){
-        $cart = cart::find($id);
+        $cart = cartUser::find($id);
         if(is_null($cart)){
             return response()->json(['message'=> 'Cart Not Found'], 404);
         }

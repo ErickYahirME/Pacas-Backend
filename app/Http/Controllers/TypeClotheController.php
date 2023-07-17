@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\typeClothe;
+use App\Models\typeClothe as tclothe;
 use Illuminate\Http\Request;
 
 class TypeClotheController extends Controller

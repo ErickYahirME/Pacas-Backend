@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserProfile;
+use App\Http\Controllers\CartUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SexController;
 use App\Http\Controllers\SizeController;
@@ -52,6 +53,12 @@ Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct']);
 Route::delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']);
 Route::get('product/author/{author}', [ProductController::class, 'getProductByAuthor']);
 
+Route::get('cart', [CartUserController::class, 'getCart']);
+Route::get('cart/{id}', [CartUserController::class, 'getCartById']);
+Route::get('cart/user/{user}', [CartUserController::class, 'getCartByUser']);
+Route::post('addCart', [CartUserController::class, 'addCart']);
+Route::put('updateCart/{id}', [CartUserController::class, 'updateCart']);
+Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart']);
 
 
 

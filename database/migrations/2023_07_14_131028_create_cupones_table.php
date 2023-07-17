@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('type_colors', function (Blueprint $table) {
+        Schema::create('cupones', function (Blueprint $table) {
             $table->id();
-            $table->string('type_color');
+            $table->string('codigo');
+            $table->integer(('descuento'));
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('type_colors');
+        Schema::dropIfExists('cupones');
     }
 };

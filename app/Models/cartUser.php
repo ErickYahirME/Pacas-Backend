@@ -13,6 +13,6 @@ class cartUser extends Model
         'user_id',
         'product_id',
         'quantity',
-        'total',
+        // 'total',
     ];
 }

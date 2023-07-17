@@ -22,7 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedBigInteger('size_id')->nullable();
             $table->unsignedBigInteger('type_clothes_id')->nullable();
-            // $table->unsignedBigInteger('type_color_id')->nullable();
 
 
             $table->foreign('author_id')
@@ -35,10 +34,6 @@ return new class extends Migration
 
             $table->foreign('type_clothes_id')
             ->references('id')->on('type_clothes')
-            ->onDelete('set null');
-
-            $table->foreign('type_color_id')
-            ->references('id')->on('type_colors')
             ->onDelete('set null');
 
             $table->timestamps();
