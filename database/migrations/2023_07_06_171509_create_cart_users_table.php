@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->integer('quantity');
-            $table->integer('total');
+            // $table->integer('total');
 
             $table->foreign('user_id')
             ->references('id')->on('users')->onDelete('set null');
