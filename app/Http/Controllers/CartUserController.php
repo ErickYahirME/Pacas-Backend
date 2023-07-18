@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\cartUser;
+use App\Models\product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CartUserController extends Controller
@@ -24,7 +26,16 @@ class CartUserController extends Controller
     }
 
     public function getCartByUser($user){
-        $cart = cartUser::where('user_id', $user)->get();
+        $cart = cartUser::where('user_id', $user)
+        ->addSelect([
+            'user' =>User::select('name')
+            ->whereColumn('user_id','id')
+        ])
+        ->addSelect([
+            'product' =>product::select('name')
+            ->whereColumn('product_id','id')
+        ])
+        ->get();
         if(is_null($cart)){
             return response()->json(['message' => 'Cart Not Found'], 404);
         }
