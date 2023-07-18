@@ -21,7 +21,25 @@ class ProductController extends Controller
     }
 
     public function addProduct(Request $request){
-        $product = product::create($request->all());
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required',
+            'stock' => 'required',
+            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:min_width=100,min_height=200,max_width=1000,max_height=1000',
+            'author_id' => 'required|exists:users,id',
+            'size_id' => 'required|exists:sizes,id',
+            'type_clothes_id' => 'required|exists:type_clothes,id',
+        ]);
+
+        // $product = product::create($request->all());
+        $product = new product($request->all());
+        // $path = $request->file('image')->store('public/imagesProduct');
+        $path = $request->file('image')->storeAs('public/imagesProduct', $request->name . '.' . $request->file('image')->extension());
+        $product->image = $path;
+        $product->save();
+
         return response($product, 201);
     }
 

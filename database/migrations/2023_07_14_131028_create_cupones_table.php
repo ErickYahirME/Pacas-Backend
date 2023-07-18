@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo');
             $table->integer(('descuento'));
-            $table->date('fecha_inicio');
+            $table->timestamp('fecha_inicio');
             $table->date('fecha_fin');
             $table->boolean('estado');
             $table->timestamps();
