@@ -22,6 +22,9 @@ class SexController extends Controller
     }
 
     public function addSex(Request $request){
+        $request->validate([
+            'sex'=>'required',
+        ]);
         $sex = sex::create($request->all());
         return response($sex, 201);
     }

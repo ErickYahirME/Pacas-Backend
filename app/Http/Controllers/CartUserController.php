@@ -43,6 +43,11 @@ class CartUserController extends Controller
     }
 
     public function addCart(Request $request){
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required'
+        ]);
         $cart = cartUser::create($request->all());
         return response($cart, 201);
     }
