@@ -44,7 +44,7 @@ Route::group(['middleware'=>'auth:api'], function(){
     // delete Sex
     Route::delete('deleteGenero/{id}', [SexController::class, 'deleteSex'])->middleware('auth:api');
 
-
+    Route::get('allProduct', [ProductController::class, 'getAllProduct'])->middleware('auth:api');
     Route::get('product/{id}', [ProductController::class, 'getProductById'])->middleware('auth:api');
     Route::post('addProduct', [ProductController::class, 'addProduct'])->middleware('auth:api');
     Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct'])->middleware('auth:api');
