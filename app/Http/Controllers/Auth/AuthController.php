@@ -7,42 +7,22 @@ use App\Models\role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Contracts\Providers\JWT;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-
-    // public function login(Request $request){
-    //     $this->validate($request, [
-    //         'email' => 'required|max:255',
-    //         'password' => 'required',
-    //     ]);
-
-    //     $login = $request-> only('email', 'password');
-
-
-    //     if(Auth::attempt($login)){
-
-    //         /**
-    //      * @var User $user
-    //      */
-    //     $user = Auth::user();
-    //     $token = $user->createToken($user->name);
-
-    //     return response([
-    //         'id'=> $user->id,
-    //         'name'=> $user->name,
-    //         'email'=> $user->email,
-    //         'created_at' => $user->created_at,
-    //         'updated_at' => $user->updated_at,
-    //         'token' => $token->accessToken,
-    //         // 'token_expires_at'=> $token->token->expires_at,
-    //     ],200);
-    //     }
-
-    //     return response(['message' => 'Invalid Login credential!!', 401]);
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login']]);
+    }
 
 
-    // }
 
     public function login(Request $request)
     {
@@ -61,17 +41,24 @@ class AuthController extends Controller
                 )
                 ->firstOrFail();
 
-        $token = $user->createToken('TOKEN')->plainTextToken;
+        $token = JWTAuth::fromUser($user);
+        // $token = $user->createToken('TOKEN')->plainTextToken;
         $cookie = cookie('cookie_token', $token,60 *24);
 
         return response()
             ->json([
                 'message'=>'Hi',
                 'name' => $user->name,
-                'access_token' => $token,
-                'typeToken' => 'Bearer',
+                'token'=> $this->respondWithToken($token),
+                // 'access_token' => $token,
+                // 'typeToken' => 'Bearer',
                 'user' => $user
             ])->withoutCookie($cookie);
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
     }
 
 
@@ -85,6 +72,35 @@ class AuthController extends Controller
         $userToken = $user->tokens();
         $userToken->delete();
         return response(['message'=> 'Logged Out!!'],200);
+    }
+
+       /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        $token = JWTAuth::parseToken()->refresh();
+        return $this->respondWithToken($token);
+    }
+
+
+        /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        $expiration = JWTAuth::factory()->getTTL() * 60;
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $expiration,
+        ]);
     }
 
 }
