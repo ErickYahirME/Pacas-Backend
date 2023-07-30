@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class TokenController extends Controller
 {
-    //función para la validación del token  y el usuario
-    public function validateToken(Request $request){
-        $request->validate([
-            'token' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
-        ]);
-        //si el token es valido retorna un mensaje de token validado
 
-        return response()->json(['message' => 'Token Validated'], 200);
+    //función para validar un token valido  de tipo Bearer y regresar un booleano como respuesta
+    public function validarToken(Request $request)
+    {
+        try {
+            $token = $request->input('token');
+            if (!$token) {
+                return response()->json(['valido' => false], 401);
+            }
 
-    }
+            $user = JWTAuth::parseToken()->check();
+            if (!$user) {
+                return response()->json(['valido' => false], 401);
+            }
 
-    public function validateToken2($token){
-        $user = User::where('api_token', $token)->first();
-
-        if ($user) {
-            // El token es válido y corresponde a un usuario existente
-            return true;
-        } else {
-            // El token no es válido o no está asociado a ningún usuario
-            return false;
+            return response()->json(['valido' => true], 200);
+        } catch (JWTException $e) {
+            return response()->json(['valido' => false], 500);
         }
     }
 }

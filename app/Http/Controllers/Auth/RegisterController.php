@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RegisterController extends Controller
 {
@@ -50,8 +51,8 @@ class RegisterController extends Controller
                 'status'=> true,
                 'message'=> 'User created successfully',
                 'user'=> $user,
-                'access_token'=> $token,
-                'token_type'=> 'Bearer'
+                'token'=> $this->respondWithToken($token),
+                // 'token_type'=> 'Bearer'
             ],200);
 
         } catch (\Throwable $th) {
@@ -61,5 +62,15 @@ class RegisterController extends Controller
             ],500);
         }
 
+    }
+
+        protected function respondWithToken($token)
+    {
+        $expiration = JWTAuth::factory()->getTTL() * 60;
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $expiration,
+        ]);
     }
 }
