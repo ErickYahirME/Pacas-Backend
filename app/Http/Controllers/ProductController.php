@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     //
     public function getAllProduct(){
-        return response()->json(product::all(), 200);
+
+        // return response()->json(product::all(), 200);
+        $products = product::all();
+
+        // Recorrer los productos y generar la URL completa de la imagen para cada uno
+        foreach ($products as $product) {
+            $product->image = asset(Storage::url($product->image));
+        }
+
+        return response()->json($products, 200);
     }
 
     public function getProductById($id){
@@ -35,6 +45,7 @@ class ProductController extends Controller
 
         // $product = product::create($request->all());
         $product = new product($request->all());
+
         // $path = $request->file('image')->store('public/imagesProduct');
         $path = $request->file('image')->storeAs('public/imagesProduct', $request->name . '.' . $request->file('image')->extension());
         $product->image = $path;

@@ -7,6 +7,7 @@ use App\Http\Controllers\CartUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SexController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\TypeClotheController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,8 @@ Route::group(['middleware'=>'auth:api'], function(){
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
+Route::post('tokenValidar', [TokenController::class, 'validateToken']);
+Route::post('tokenValidar2', [TokenController::class, 'validateToken2']);
 
 
 
