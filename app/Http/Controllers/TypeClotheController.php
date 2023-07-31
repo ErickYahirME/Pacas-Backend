@@ -2,48 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\typeClothe as tclothe;
+use App\Models\typeClothe;
 use Illuminate\Http\Request;
 
 class TypeClotheController extends Controller
 {
     public function getTypeClothe()
     {
-        Return response()->json(tClothe::all(), 200);
+        Return response()->json(typeClothe::all(), 200);
     }
 
     public function getTypeClotheById($id)
     {
-        $tClothe = tClothe::find($id);
-        if(is_null($tClothe)){
+        $typeClothe = typeClothe::find($id);
+        if(is_null($typeClothe)){
             return response()->json(['message'=>'Type of clothe not found'], 404);
         }
-        return response()->json($tClothe::find($id), 200);
+        return response()->json($typeClothe::find($id), 200);
     }
 
     public function addTypeClothe(Request $request)
     {
-        $tClothe = tClothe::create($request->all());
-        return response($tClothe, 201);
+        $request->validate([
+            'name_clothe'=>'required',
+        ]);
+        $typeClothe = typeClothe::create($request->all());
+        return response($typeClothe, 201);
     }
 
     public function updateTypeClothe(Request $request, $id)
     {
-        $tClothe = tClothe::find($id);
-        if(is_null($tClothe)){
+        $typeClothe = typeClothe::find($id);
+        if(is_null($typeClothe)){
             return response()-> json(['message'=>'Type of clothe not found'], 404);
         }
-        $tClothe->update($request->all());
-        return response($tClothe, 200);
+        $typeClothe->update($request->all());
+        return response($typeClothe, 200);
     }
 
     public function deleteTypeClothe($id)
     {
-        $tClothe = tClothe::find($id);
-        if(is_null($tClothe)){
+        $typeClothe = typeClothe::find($id);
+        if(is_null($typeClothe)){
             return response()->json(['message'=> 'Type of clothe not found'], 404);
         }
-        $tClothe->delete();
+        $typeClothe->delete();
         return response()->json(['message'=> 'Type of clothe deleted', null], 204);
     }
 }

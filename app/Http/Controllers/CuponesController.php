@@ -25,6 +25,13 @@ class CuponesController extends Controller
 
     public function addCupones(Request $request)
     {
+        $request->validate([
+            'codigo'=>'required',
+            'descuento'=>'required',
+            'fecha_inicio'=> 'required',
+            'fecha_fin'=>'required',
+            'estado'=>'required',
+        ]);
         $cupones = cupones::create($request->all());
         return response($cupones, 201);
     }
