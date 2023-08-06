@@ -13,6 +13,6 @@ class UserProfile extends Controller
     public function userDetails()
     {
         $user = Auth::guard('api')->user();
-        return response()->json(['data' => $user]);
+        return response()->json( $user);
     }
 }

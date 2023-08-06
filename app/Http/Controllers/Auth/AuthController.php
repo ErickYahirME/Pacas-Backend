@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
         // $token = $user->createToken('TOKEN')->plainTextToken;
-        $cookie = cookie('cookie_token', $token,60 *24);
+        $cookie = cookie('cookie_token', $token,60 *24* 2 );
 
         return response()
             ->json([
@@ -94,13 +94,15 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken($token)
-    {
-        $expiration = JWTAuth::factory()->getTTL() * 60;
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $expiration,
-        ]);
-    }
+{
+    $expiration = JWTAuth::factory()->getTTL() * 60;
+
+    return response()->json([
+        'access_token' => $token,
+        'token_type' => 'bearer',
+        'expires_in' => $expiration,
+        'expiration_date' => now()->addSeconds($expiration)->toDateTimeString(),
+    ]);
+}
 
 }
