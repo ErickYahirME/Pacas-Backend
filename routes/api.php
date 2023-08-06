@@ -10,6 +10,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\TypeClotheController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,11 +80,21 @@ Route::group(['middleware'=>'auth:api'], function(){
     Route::post('addCart', [CartUserController::class, 'addCart'])->middleware('auth:api');
     Route::put('updateCart/{id}', [CartUserController::class, 'updateCart'])->middleware('auth:api');
     Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart'])->middleware('auth:api');
+
+    // get all role
+    Route::get('role', [RoleController::class, 'getRole'])->middleware('auth:api');
+    //get role by id
+    Route::get('role/{id}', [RoleController::class, 'getRoleById'])->middleware('auth:api');
+    //add role
+    Route::post('addRole', [RoleController::class, 'addRole'])->middleware('auth:api');
+    //update role
+    Route::put('updateRole/{id}', [RoleController::class, 'updateRole'])->middleware('auth:api');
+    //delete role
+    Route::delete('deleteRole/{id}', [RoleController::class, 'deleteRole'])->middleware('auth:api');
 });
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
-
 
 
 
