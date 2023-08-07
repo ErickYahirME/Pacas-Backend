@@ -20,8 +20,26 @@ class UserSeeder extends Seeder
             'sex_id' => 1,
             'role_id' => 1,
             'phone' => '5555555555',
-            'email' => 'rom@example.com',
+            'email' => 'admin@example.com',
             'password' => Hash::make('password1'),
+        ]);
+        User::create([
+            'name' => 'Rodrigo',
+            'lastname' => 'Montes Antonio',
+            'sex_id' => 1,
+            'role_id' => 2,
+            'phone' => '5555555555',
+            'email' => 'vendedor@example.com',
+            'password' => Hash::make('password2'),
+        ]);
+        User::create([
+            'name' => 'Jorge',
+            'lastname' => 'Quero',
+            'sex_id' => 1,
+            'role_id' => 3,
+            'phone' => '5555555555',
+            'email' => 'user@example.com',
+            'password' => Hash::make('password3'),
         ]);
     }
 }

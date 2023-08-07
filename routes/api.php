@@ -1,5 +1,8 @@
 <?php
 
+use Tymon\JWTAuth\Http\Middleware\Authenticate;
+
+
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserProfile;
@@ -7,6 +10,7 @@ use App\Http\Controllers\CartUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SexController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\TypeClotheController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,56 +27,57 @@ use App\Http\Controllers\RoleController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
+Route::group([
+    'middleware' => 'jwt.auth',
+], function ($router) {
 
-// Auth
-Route::group(['middleware'=>'auth:api'], function(){
-    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
-    Route::get('profile', [UserProfile::class, 'userDetails'])->middleware('auth:api');
-    Route::get('product', [ProductController::class, 'getAllProduct'])->middleware('auth:api');
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('profile', [UserProfile::class, 'userDetails']);
+    Route::get('product', [ProductController::class, 'getAllProduct']);
+
+    Route::get('allProduct', [ProductController::class, 'getAllProduct']);
+    Route::get('product/{id}', [ProductController::class, 'getProductById']);
+    Route::post('addProduct', [ProductController::class, 'addProduct']);
+    Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct']);
+    Route::delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']);
+    Route::get('product/author/{author}', [ProductController::class, 'getProductByAuthor']);
 
     // get all Sex
-    Route::get('genero', [SexController::class, 'getSex'])->middleware('auth:api');
+    Route::get('genero', [SexController::class, 'getSex']);
     // get all Sex by Id
-    Route::get('genero/{id}', [SexController::class, 'getSexById'])->middleware('auth:api');
+    Route::get('genero/{id}', [SexController::class, 'getSexById']);
     // add Sex
-    Route::post('addGenero', [SexController::class, 'addSex'])->middleware('auth:api');
+    Route::post('addGenero', [SexController::class, 'addSex']);
     // update Sex
-    Route::put('updateGenero/{id}', [SexController::class, 'updateSex'])->middleware('auth:api');
+    Route::put('updateGenero/{id}', [SexController::class, 'updateSex']);
     // delete Sex
-    Route::delete('deleteGenero/{id}', [SexController::class, 'deleteSex'])->middleware('auth:api');
-
-
-    Route::get('product/{id}', [ProductController::class, 'getProductById'])->middleware('auth:api');
-    Route::post('addProduct', [ProductController::class, 'addProduct'])->middleware('auth:api');
-    Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct'])->middleware('auth:api');
-    Route::delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct'])->middleware('auth:api');
-    Route::get('product/author/{author}', [ProductController::class, 'getProductByAuthor'])->middleware('auth:api');
+    Route::delete('deleteGenero/{id}', [SexController::class, 'deleteSex']);
 
     // get all Size
-    Route::get('talla', [SizeController::class, 'getSize'])->middleware('auth:api');
+    Route::get('talla', [SizeController::class, 'getSize']);
     // get all size by Id
-    Route::get('talla/{id}', [SizeController::class, 'getSizeById'])->middleware('auth:api');
+    Route::get('talla/{id}', [SizeController::class, 'getSizeById']);
     // add size
-    Route::post('addTalla', [SizeController::class, 'addSize'])->middleware('auth:api');
+    Route::post('addTalla', [SizeController::class, 'addSize']);
     // updare size
-    Route::put('updateTalla/{id}', [SizeController::class, 'updateSize'])->middleware('auth:api');
+    Route::put('updateTalla/{id}', [SizeController::class, 'updateSize']);
     //delete size
-    Route::delete('deleteTalla/{id}', [SizeController::class, 'deleteSize'])->middleware('auth:api');
+    Route::delete('deleteTalla/{id}', [SizeController::class, 'deleteSize']);
 
     //get all typeClothe
-    Route::get('tipoRopa', [TypeClotheController::class, 'getTypeClothe'])->middleware('auth:api');
+    Route::get('tipoRopa', [TypeClotheController::class, 'getTypeClothe']);
     //get all typeClothe by id
-    Route::get('tipoRopa/{id}', [TypeClotheController::class, 'getTypeClotheById'])->middleware('auth:api');
+    Route::get('tipoRopa/{id}', [TypeClotheController::class, 'getTypeClotheById']);
     //add typeClothe
-    Route::post('addTipoRopa', [TypeClotheController::class, 'addTypeClothe'])->middleware('auth:api');
+    Route::post('addTipoRopa', [TypeClotheController::class, 'addTypeClothe']);
     // update typeclothe
-    Route::put('updateTypeClothe/{id}', [TypeClotheController::class, 'updateTypeClothe'])->middleware('auth:api');
+    Route::put('updateTypeClothe/{id}', [TypeClotheController::class, 'updateTypeClothe']);
     //delete typeclothe
-    Route::delete('deleteTypeClothe/{id}', [TypeClotheController::class, 'deleteTypeClothe'])->middleware('auth:api');
+    Route::delete('deleteTypeClothe/{id}', [TypeClotheController::class, 'deleteTypeClothe']);
 
     // Route::get('cart', [CartUserController::class, 'getCart']);
     Route::get('cart/{id}', [CartUserController::class, 'getCartById'])->middleware('auth:api');
@@ -81,7 +86,13 @@ Route::group(['middleware'=>'auth:api'], function(){
     Route::put('updateCart/{id}', [CartUserController::class, 'updateCart'])->middleware('auth:api');
     Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart'])->middleware('auth:api');
 
-    // get all role
+    Route::get('cart/{id}', [CartUserController::class, 'getCartById']);
+    Route::get('cart/user/{user}', [CartUserController::class, 'getCartByUser']);
+    Route::post('addCart', [CartUserController::class, 'addCart']);
+    Route::put('updateCart/{id}', [CartUserController::class, 'updateCart']);
+    Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart']);
+
+   // get all role
     Route::get('role', [RoleController::class, 'getRole'])->middleware('auth:api');
     //get role by id
     Route::get('role/{id}', [RoleController::class, 'getRoleById'])->middleware('auth:api');
@@ -92,10 +103,16 @@ Route::group(['middleware'=>'auth:api'], function(){
     //delete role
     Route::delete('deleteRole/{id}', [RoleController::class, 'deleteRole'])->middleware('auth:api');
 });
-
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
+Route::post('validarToken', [TokenController::class, 'validarToken']);
 
+// Auth
+// Route::group(['middleware'=>'auth:api'], function(){});
+
+
+// Route::post('tokenValidar', [TokenController::class, 'validateToken']);
+// Route::post('tokenValidar2', [TokenController::class, 'validateToken2']);
 
 
 
