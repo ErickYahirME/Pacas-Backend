@@ -13,5 +13,7 @@ class methodPay extends Model
         'numTarjeta',
         'fechaVencimiento',
         'cvv',
+        'price',
+        'idUser'
     ];
 }
