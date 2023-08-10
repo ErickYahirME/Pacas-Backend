@@ -30,7 +30,7 @@ class RoleController extends Controller
         return response($role, 201);
     }
 
-    public function updateRole(Request $request)
+    public function updateRole(Request $request, $id)
     {
         $role = role::find($id);
         if(is_null($role)){
