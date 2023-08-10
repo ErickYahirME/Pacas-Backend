@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserProfile;
 use App\Http\Controllers\CartUserController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SexController;
 use App\Http\Controllers\SizeController;
@@ -42,6 +43,7 @@ Route::group([
     Route::get('product/{id}', [ProductController::class, 'getProductById']);
     Route::post('addProduct', [ProductController::class, 'addProduct']);
     Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct']);
+    // Route::post('updateProductChido/{id}', [ProductController::class, 'hola']);
     Route::delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']);
     Route::get('product/author/{author}', [ProductController::class, 'getProductByAuthor']);
 
@@ -84,6 +86,8 @@ Route::group([
     Route::post('addCart', [CartUserController::class, 'addCart']);
     Route::put('updateCart/{id}', [CartUserController::class, 'updateCart']);
     Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart']);
+
+    Route::get('downloadImage/{product}/image', [ProductController::class, 'downloadImage']);
 });
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
