@@ -6,6 +6,8 @@ use App\Models\cartUser;
 use App\Models\product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CartUserController extends Controller
 {
@@ -35,6 +37,16 @@ class CartUserController extends Controller
             'product' =>product::select('name')
             ->whereColumn('product_id','id')
         ])
+        ->addSelect([
+            'price' =>product::select('price')
+            ->whereColumn('product_id','id')
+        ])
+            //GitHHUB COPILOT agregar addSelect para la url de la imagen
+        ->addSelect([
+            'image'=>product::select('image')
+            ->whereColumn('product_id','id')
+        ])
+
         ->get();
         if(is_null($cart)){
             return response()->json(['message' => 'Cart Not Found'], 404);

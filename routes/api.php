@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserProfile;
 use App\Http\Controllers\CartUserController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SexController;
 use App\Http\Controllers\SizeController;
@@ -43,6 +44,7 @@ Route::group([
     Route::get('product/{id}', [ProductController::class, 'getProductById']);
     Route::post('addProduct', [ProductController::class, 'addProduct']);
     Route::put('updateProduct/{id}', [ProductController::class, 'updateProduct']);
+    // Route::post('updateProductChido/{id}', [ProductController::class, 'hola']);
     Route::delete('deleteProduct/{id}', [ProductController::class, 'deleteProduct']);
     Route::get('product/author/{author}', [ProductController::class, 'getProductByAuthor']);
 
@@ -92,6 +94,9 @@ Route::group([
     Route::put('updateCart/{id}', [CartUserController::class, 'updateCart']);
     Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart']);
 
+
+    Route::get('downloadImage/{product}/image', [ProductController::class, 'downloadImage']);
+
    // get all role
     Route::get('role', [RoleController::class, 'getRole'])->middleware('auth:api');
     //get role by id
@@ -102,6 +107,7 @@ Route::group([
     Route::put('updateRole/{id}', [RoleController::class, 'updateRole'])->middleware('auth:api');
     //delete role
     Route::delete('deleteRole/{id}', [RoleController::class, 'deleteRole'])->middleware('auth:api');
+
 });
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
