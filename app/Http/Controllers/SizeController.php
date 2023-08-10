@@ -23,9 +23,9 @@ class SizeController extends Controller
 
     public function addSize(Request $request)
     {
-        //$request->validate([
-          //  'size' => 'required',
-        //]);
+        $request->validate([
+            'size' => 'required',
+        ]);
         $size = size::create($request->all());
         return response($size, 201);
     }
