@@ -18,5 +18,6 @@ class address extends Model
         'estado',
         'pais',
         'codigoPostal',
+        'idUser'
     ];
 }
