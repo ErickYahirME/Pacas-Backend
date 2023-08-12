@@ -10,6 +10,7 @@ use Database\Seeders\SizeSeeder;
 use Database\Seeders\TypeClotheSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\AddressSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(SexSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(AddressSeeder::class);
         // \App\Models\User::factory(10)->create();
 
     }

@@ -14,6 +14,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\TypeClotheController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\MethodPayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -115,6 +116,18 @@ Route::group([
     Route::put('updateAddress/{id}', [AddressController::class, 'updateAddress']);
     //delete Address
     Route::delete('deleteAddress/{id}', [AddressController::class, 'deleteAddress']);
+
+
+    //get all payment method
+    Route::get('paymentMethod', [MethodPayController::class, 'getPaymentMethod']);
+    //get payment method by id
+    Route::get('paymentMethod/{id}', [MethodPayController::class, 'getPaymentMethodById']);
+    //add payment method
+    Route::post('addPaymentMethod', [MethodPayController::class, 'addPaymentMethod']);
+    //update payment method
+    Route::put('updatePaymentMethod/{id}', [MethodPayController::class, 'updatePaymentMethod']);
+    //delete payment method
+    Route::delete('deletePaymentMethod/{id}', [MethodPayController::class, 'deletePaymentMethod']);
 
 });
 Route::post('login', [AuthController::class, 'login']);
