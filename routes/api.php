@@ -13,6 +13,7 @@ use App\Http\Controllers\SexController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\TypeClotheController;
+use App\Http\Controllers\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -82,12 +83,6 @@ Route::group([
     Route::delete('deleteTypeClothe/{id}', [TypeClotheController::class, 'deleteTypeClothe']);
 
     // Route::get('cart', [CartUserController::class, 'getCart']);
-    Route::get('cart/{id}', [CartUserController::class, 'getCartById'])->middleware('auth:api');
-    Route::get('cart/user/{user}', [CartUserController::class, 'getCartByUser'])->middleware('auth:api');
-    Route::post('addCart', [CartUserController::class, 'addCart'])->middleware('auth:api');
-    Route::put('updateCart/{id}', [CartUserController::class, 'updateCart'])->middleware('auth:api');
-    Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart'])->middleware('auth:api');
-
     Route::get('cart/{id}', [CartUserController::class, 'getCartById']);
     Route::get('cart/user/{user}', [CartUserController::class, 'getCartByUser']);
     Route::post('addCart', [CartUserController::class, 'addCart']);
@@ -98,15 +93,28 @@ Route::group([
     Route::get('downloadImage/{product}/image', [ProductController::class, 'downloadImage']);
 
    // get all role
-    Route::get('role', [RoleController::class, 'getRole'])->middleware('auth:api');
+    Route::get('role', [RoleController::class, 'getRole']);
     //get role by id
-    Route::get('role/{id}', [RoleController::class, 'getRoleById'])->middleware('auth:api');
+    Route::get('role/{id}', [RoleController::class, 'getRoleById']);
     //add role
-    Route::post('addRole', [RoleController::class, 'addRole'])->middleware('auth:api');
+    Route::post('addRole', [RoleController::class, 'addRole']);
     //update role
-    Route::put('updateRole/{id}', [RoleController::class, 'updateRole'])->middleware('auth:api');
+    Route::put('updateRole/{id}', [RoleController::class, 'updateRole']);
     //delete role
-    Route::delete('deleteRole/{id}', [RoleController::class, 'deleteRole'])->middleware('auth:api');
+    Route::delete('deleteRole/{id}', [RoleController::class, 'deleteRole']);
+
+
+
+    //get all address
+    Route::get('address', [AddressController::class, 'getAddress']);
+    //get addres by id
+    Route::get('address/{id}', [AddressController::class, 'getAddresById']);
+    //add address
+    Route::post('addAddress', [AddressController::class, 'addAddress']);
+    //update address
+    Route::put('updateAddress/{id}', [AddressController::class, 'updateAddress']);
+    //delete Address
+    Route::delete('deleteAddress/{id}', [AddressController::class, 'deleteAddress']);
 
 });
 Route::post('login', [AuthController::class, 'login']);
