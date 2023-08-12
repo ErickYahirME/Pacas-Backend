@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('method_pays', function (Blueprint $table) {
             $table->id();
+            $table->string('numTarjeta');
+            $table->integer('fechaVencimiento');
+            $table->integer('cvv');
+            $table->integer('price');
+
+            $table->unsignedBigInteger('idUser')->nullable();
+
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('set null');
+
             $table->timestamps();
         });
     }
