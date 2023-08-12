@@ -127,7 +127,7 @@ Route::group([
     //update payment method
     Route::put('updatePaymentMethod/{id}', [MethodPayController::class, 'updatePaymentMethod']);
     //delete payment method
-    Route::delete('deletePymentMethod/{id}', [MethodPayController::class, 'deletePaymentMethod']);
+    Route::delete('deletePaymentMethod/{id}', [MethodPayController::class, 'deletePaymentMethod']);
 
 });
 Route::post('login', [AuthController::class, 'login']);
