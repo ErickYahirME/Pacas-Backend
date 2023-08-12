@@ -13,7 +13,22 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->string('calle');
+            $table->integer('numExt');
+            $table->integer('numInt');
+            $table->string('colonia');
+            $table->string('municipio');
+            $table->string('estado');
+            $table->string('pais');
+            $table->integer('codigoPostal');
+
+            $table->unsignedBigInteger('idUser')->nullable();
+
+            $table->foreign('idUser')
+            ->references('id')->on('users')->onDelete('set null');
+
             $table->timestamps();
+            
         });
     }
 
