@@ -41,13 +41,16 @@ class CartUserController extends Controller
             'price' =>product::select('price')
             ->whereColumn('product_id','id')
         ])
-            //GitHHUB COPILOT agregar addSelect para la url de la imagen
         ->addSelect([
             'image'=>product::select('image')
             ->whereColumn('product_id','id')
         ])
 
         ->get();
+        foreach ($cart as $product) {
+            $product->image = asset(Storage::url($product->image));
+        }
+
         if(is_null($cart)){
             return response()->json(['message' => 'Cart Not Found'], 404);
         }
