@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('estado');
             $table->string('pais');
             $table->integer('codigoPostal');
+            $table->string('nombreCompleto');
 
             $table->unsignedBigInteger('idUser')->nullable();
 
@@ -28,7 +29,7 @@ return new class extends Migration
             ->references('id')->on('users')->onDelete('set null');
 
             $table->timestamps();
-            
+
         });
     }
 
