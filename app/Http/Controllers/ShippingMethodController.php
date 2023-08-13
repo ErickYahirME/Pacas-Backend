@@ -9,7 +9,7 @@ class ShippingMethodController extends Controller
 {
     public function getShippingMethod()
     {
-        Return response()->json(shippingMethod::all(), 200);
+        return response()->json(shippingMethod::all(), 200);
     }
 
     public function getShippingMethodById($id)
@@ -40,5 +40,5 @@ class ShippingMethodController extends Controller
         return response($shippingMethod, 200);
     }
 
-    
+
 }

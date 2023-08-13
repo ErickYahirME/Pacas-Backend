@@ -18,6 +18,8 @@ use App\Http\Controllers\MethodPayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShippingMethodController;
+use App\Http\Controllers\ShoppingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +91,7 @@ Route::group([
     Route::post('addCart', [CartUserController::class, 'addCart']);
     Route::put('updateCart/{id}', [CartUserController::class, 'updateCart']);
     Route::delete('deleteCart/{id}', [CartUserController::class, 'deleteCart']);
+    Route::delete('/clearCart/{userId}', [CartUserController::class, 'clearCart']);
 
 
     Route::get('downloadImage/{product}/image', [ProductController::class, 'downloadImage']);
@@ -116,7 +119,14 @@ Route::group([
     Route::put('updateAddress/{id}', [AddressController::class, 'updateAddress']);
     //delete Address
     Route::delete('deleteAddress/{id}', [AddressController::class, 'deleteAddress']);
+    Route::get('getAddressByUser/{id}', [AddressController::class, 'getAddressByUser']);
 
+
+
+    Route::get('getShoppingByUser/{id}', [ShoppingController::class, 'getShoppingByUser']);
+    Route::post('addShoppingByUser', [ShoppingController::class, 'addShopping']);
+
+    Route::get('getShippingMethod', [ShippingMethodController::class, 'getShippingMethod']);
 
     //get all payment method
     Route::get('paymentMethod', [MethodPayController::class, 'getPaymentMethod']);
@@ -128,6 +138,7 @@ Route::group([
     Route::put('updatePaymentMethod/{id}', [MethodPayController::class, 'updatePaymentMethod']);
     //delete payment method
     Route::delete('deletePaymentMethod/{id}', [MethodPayController::class, 'deletePaymentMethod']);
+
 
 });
 Route::post('login', [AuthController::class, 'login']);

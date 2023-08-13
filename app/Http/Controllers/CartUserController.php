@@ -45,6 +45,10 @@ class CartUserController extends Controller
             'image'=>product::select('image')
             ->whereColumn('product_id','id')
         ])
+        ->addSelect([
+            'stock'=>product::select('stock')
+            ->whereColumn('product_id','id')
+        ])
 
         ->get();
         foreach ($cart as $product) {
@@ -83,5 +87,13 @@ class CartUserController extends Controller
         }
         $cart->delete();
         return response()->json(['message'=>'Cart Deleted',null], 204);
+    }
+
+    public function clearCart($userId)
+    {
+
+        cartUser::where('user_id', $userId)->delete();
+
+        return response()->json(['message' => 'Carrito vaciado exitosamente'], 200);
     }
 }

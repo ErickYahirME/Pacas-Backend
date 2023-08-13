@@ -22,7 +22,8 @@ class AddressSeeder extends Seeder
             'estado' => 'Oaxakanda',
             'pais' => 'Mexico',
             'codigoPostal' => 8000,
-            'idUser' => 3
+            'idUser' => 3,
+            'nombreCompleto' => 'Juan Perez'
         ]);
 
         Address::create([
@@ -34,7 +35,8 @@ class AddressSeeder extends Seeder
             'estado' => 'Oaxakanda',
             'pais' => 'Mexico',
             'codigoPostal' => 8000,
-            'idUser' => 3
+            'idUser' => 3,
+            'nombreCompleto' => 'Lalo Perez'
         ]);
 
         Address::create([
@@ -46,7 +48,8 @@ class AddressSeeder extends Seeder
             'estado' => 'Oaxakanda',
             'pais' => 'Mexico',
             'codigoPostal' => 8000,
-            'idUser' => 3
+            'idUser' => 3,
+            'nombreCompleto' => 'Ratón Perez'
         ]);
     }
 }

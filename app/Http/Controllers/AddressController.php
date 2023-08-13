@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
-    
+
     public function getAddress()
     {
         try{
@@ -27,6 +27,14 @@ class AddressController extends Controller
         return response()->json($address::find($id), 200);
     }
 
+    public function getAddressByUser($user){
+        $address = address::where('idUser', $user)->get();
+        if(is_null($address)){
+            return response()->json(['message' => 'Address not found'], 404);
+        }
+        return response()->json($address, 200);
+    }
+
     public function addAddress(Request $request)
     {
         try{
@@ -40,9 +48,10 @@ class AddressController extends Controller
                 'estado' => 'required|string',
                 'pais' => 'required|string',
                 'codigoPostal' => 'required',
-                'idUser' => 'required|exists:users,id'
+                'idUser' => 'required|exists:users,id',
+                'nombreCompleto' => 'required|string',
             ]);
-            
+
             $address = address::create($request->all());
             return response($address, 201);
         } catch (\Exception $e) {
