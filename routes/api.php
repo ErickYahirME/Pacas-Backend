@@ -140,6 +140,18 @@ Route::group([
     Route::delete('deletePaymentMethod/{id}', [MethodPayController::class, 'deletePaymentMethod']);
 
 
+    //get all shipping method
+    Route::get('shippingMethod',[ShippingMethodController::class, 'getShippingMethod']);
+    //get shippingmethod by id
+    Route::get('shippingMethod/{id}',[ShippingMethodController::class, 'getShippingMethodById']);
+    //add shipping method
+    Route::post('addShippingMethod',[ShippingMethodController::class, 'addShippingMethod']);
+    //update shipping method
+    Route::put('updateShippingMethod/{id}',[ShippingMethodController::class, 'updateShippingMethod']);
+    //delete shipping method
+    Route::delete('deleteShippingMethod/{id}',[ShippingMethodController::class, 'deleteShippingMethod']);
+    //get shipping method by id
+    Route::get('getShippingMethodByUser/{id}',[ShippingMethodController::class, 'getShippingMethodByUser']);
 });
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
