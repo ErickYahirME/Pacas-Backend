@@ -11,5 +11,6 @@ class shippingMethod extends Model
 
     protected $fillable = [
         'paqueteria',
+        'idUser'
     ];
 }

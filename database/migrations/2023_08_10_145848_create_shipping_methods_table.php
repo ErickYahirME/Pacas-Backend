@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('shipping_methods', function (Blueprint $table) {
             $table->id();
             $table->string('paqueteria');
+
+            $table->unsignedBigInteger('idUser')->nullable();
+
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('set null');
+
             $table->timestamps();
         });
     }
